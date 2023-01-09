@@ -31,3 +31,6 @@ table{
     border-spacing: 0;
 }
 
+input, textarea, select{
+    box-sizing: border-box;
+}
