@@ -3,8 +3,9 @@ server:
 
 spring:
   mvc:
-    static-path-pattern: /static/**
-#??? ?? ???? ??. / ? ?? ??? static ?? ??? ???/
+    static-path-pattern: /static/** #static ?? ?? // GetMapping ?? ??
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/libray
