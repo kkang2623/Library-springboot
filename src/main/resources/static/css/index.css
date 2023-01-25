@@ -60,13 +60,13 @@
     text-align: center;
 }
 
-.search-button{
+.search-button {
     border: none;
     background-color: #ffffff00;
 
     cursor: pointer;
 }
 
-.search-button .fa-magnifying-glass{
+.search-button .fa-magnifying-glass {
     font-size: 20px;
 }

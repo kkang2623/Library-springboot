@@ -1,5 +1,5 @@
 .main-container {
-    padding-top: 60px;
+    padding-top: 70px;
 }
 
 .login-container {
@@ -7,11 +7,12 @@
     flex-direction: column;
     align-items: center;
 
-    margin: 0 auto;
+    margin: 0px auto;
     padding: 40px 100px;
     width: 600px;
-    background-color: aliceblue;
-    box-shadow: 0 0 5px 1px white;
+
+    background-color: white;
+    box-shadow: 0px 0px 5px 1px white;
 }
 
 .login-title {
@@ -22,26 +23,27 @@
 .login-group {
     display: flex;
     flex-direction: column;
-
+    
     margin-bottom: 15px;
     width: 100%;
 }
-.login-group label{
+
+.login-group label {
     margin-bottom: 5px;
-    font-weight: 400;
 }
-.login-inputs{
+
+.login-inputs {
     height: 40px;
-    font-size: 8px;
+    font-size: 18px;
     text-align: center;
 }
 
-.lgoin-error{
+.login-error {
     font-size: 12px;
     color: red;
 }
 
-.button-group{
+.button-group {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,20 +51,21 @@
     margin-top: 20px;
     width: 100%;
 }
-.button-group button{
+
+.button-group button {
     margin-bottom: 10px;
     width: 100%;
     font-weight: 600;
 }
 
-.google-login, .naver-login{
+.google-login, .naver-login {
     color: white;
 }
 
-.google-login{
+.google-login {
     background-color: #1a73e8;
 }
 
-.naver-login{
+.naver-login {
     background-color: #03c75a;
 }

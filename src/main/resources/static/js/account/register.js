@@ -1,8 +1,7 @@
-
 window.onload = () => {
     RegisterEvent.getInstance().addRegisterSubmitOnclickEvent();
 }
-//싱글톤
+
 class RegisterApi {
     static #instance = null;
     static getInstance() {
@@ -13,7 +12,6 @@ class RegisterApi {
     }
 
     register(user) {
-    //a.ajax 기본틀
         $.ajax({
             async: false,
             type: "post",
@@ -23,8 +21,8 @@ class RegisterApi {
             dataType: "json",
             success: response => {
                 console.log(response);
-                alert("회원가입 완료. 로그인 페이지로 이동합니다.")
-                location.replace("/account/login")
+                alert("회원가입 완료. 로그인 페이지로 이동합니다.");
+                location.replace("/account/login");
             },
             error: error => {
                 console.log(error);
@@ -33,6 +31,8 @@ class RegisterApi {
         });
     }
 }
+
+
 class RegisterService {
     static #instance = null;
     static getInstance() {
@@ -41,10 +41,9 @@ class RegisterService {
         }
         return this.#instance;
     }
-   // getError를 받았을 때
+
     setErrorMessage(errors) {
         const registerError = document.querySelectorAll(".register-error");
-
 
         this.#clearErrorMessage();
 
@@ -62,6 +61,7 @@ class RegisterService {
             }
         });
     }
+
     #clearErrorMessage() {
         const registerError = document.querySelectorAll(".register-error");
         registerError.forEach(error => {
@@ -69,6 +69,8 @@ class RegisterService {
         });
     }
 }
+
+
 class RegisterEvent {
     static #instance = null;
     static getInstance() {
@@ -77,26 +79,31 @@ class RegisterEvent {
         }
         return this.#instance;
     }
+
     addRegisterSubmitOnclickEvent() {
         const registerSubmit = document.querySelector(".register-submit");
+
         registerSubmit.onclick = () => {
             const usernameValue = document.querySelectorAll(".register-inputs")[0].value;
             const passwordValue = document.querySelectorAll(".register-inputs")[1].value;
             const repasswordValue = document.querySelectorAll(".register-inputs")[2].value;
             const nameValue = document.querySelectorAll(".register-inputs")[3].value;
             const emailValue = document.querySelectorAll(".register-inputs")[4].value;
+
             const user = new User(usernameValue, passwordValue, repasswordValue, nameValue, emailValue);
+
             RegisterApi.getInstance().register(user);
         }
     }
 }
-// 클래스 만듦
+
 class User {
     username = null;
     password = null;
     repassword = null;
     name = null;
     email = null;
+
     constructor(username, password, repassword, name, email) {
         this.username = username;
         this.password = password;

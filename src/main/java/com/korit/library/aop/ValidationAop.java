@@ -1,6 +1,5 @@
 package com.korit.library.aop;
 
-import com.korit.library.aop.annotation.ValidAspect;
 import com.korit.library.exception.CustomValidationException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -11,6 +10,7 @@ import org.springframework.validation.BeanPropertyBindingResult;
 
 import java.util.HashMap;
 import java.util.Map;
+
 @Aspect
 @Component
 public class ValidationAop {
