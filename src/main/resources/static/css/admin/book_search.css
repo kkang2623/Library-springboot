@@ -1,6 +1,6 @@
 .main-container {
     display: flex;
-
+    
     margin: 20px auto 0px;
     width: 1400px;
     height: 780px;
@@ -46,8 +46,7 @@
     width: 100%;
 }
 
-.content-table th,
-.content-table td {
+.content-table th, .content-table td {
     height: 21px;
     text-align: center;
 }
