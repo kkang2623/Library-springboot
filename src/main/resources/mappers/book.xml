@@ -4,6 +4,28 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.korit.library.repository.BookRepository">
+
+    <select id="getBookTotalCount"
+            parameterType="com.korit.library.web.dto.SearchNumberListReqDto"
+            resultType="Integer">
+        select
+            count(*)
+        from
+            book_mst
+        where
+            1 = 1
+        <if test='searchValue != null and searchValue != ""'>
+            and (
+            book_name like CONCAT('%', #{searchValue}, '%')
+            or	author like CONCAT('%', #{searchValue}, '%')
+            or	publisher like CONCAT('%', #{searchValue}, '%')
+            )
+        </if>
+        <if test='category != null and category != ""'>
+            and	category = #{category}
+        </if>
+    </select>
+
     <select id="searchBook" parameterType="com.korit.library.web.dto.SearchReqDto" resultType="com.korit.library.entity.BookMst">
         SELECT
             bm.book_id as bookId,
@@ -116,11 +138,22 @@
             book_code = #{bookCode}
     </delete>
 
+    <delete id="deleteBooks" parameterType="list">
+        delete
+        from
+            book_mst
+        where
+            book_id in
+            <foreach collection="list" item="bookId" open="(" close=")" separator=",">
+                #{bookId}
+            </foreach>
+    </delete>
+
     <insert id="registerBookImages" parameterType="list">
         insert into book_image
         values
             <foreach collection="list" item="file" separator=",">
-                (0, #{file.bookCode}, #{file.saveName}, #{file.originName}),
+                (0, #{file.bookCode}, #{file.saveName}, #{file.originName})
             </foreach>
     </insert>
 
@@ -147,6 +180,19 @@
             book_image
         where
             image_id = #{imageId}
+
+    </select>
+
+    <select id="findBookImageByBookCode" resultType="com.korit.library.entity.BookImage">
+        select
+            image_id as imageId,
+            book_code as bookCode,
+            save_name as saveName,
+            origin_name as originName
+        from
+            book_image
+        where
+            book_code = #{bookCode}
 
     </select>
 

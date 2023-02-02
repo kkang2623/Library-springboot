@@ -27,6 +27,19 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    public Map<String, Object> getBookAndImage(String bookCode) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("bookMst", bookRepository.findBookByBookCode(bookCode));
+        result.put("bookImage", bookRepository.findBookImageByBookCode(bookCode));
+
+        return result;
+    }
+
+    public int getBookTotalCount(SearchNumberListReqDto searchNumberListReqDto) {
+        return bookRepository.getBookTotalCount(searchNumberListReqDto);
+    }
+
+
     public List<BookMst> searchBook(SearchReqDto searchReqDto) {
         searchReqDto.setIndex();
         return bookRepository.searchBook(searchReqDto);
@@ -61,6 +74,10 @@ public class BookService {
 
     public void removeBook(String bookCode) {
         bookRepository.deleteBook(bookCode);
+    }
+
+    public void removeBooks(DeleteBooksReqDto deleteBooksReqDto) {
+        bookRepository.deleteBooks(deleteBooksReqDto.getUserIds());
     }
 
     public void registerBookImages(String bookCode, List<MultipartFile> files) {

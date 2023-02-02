@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Api(tags = {"관리자 도서관리 API"})
 @RequestMapping("/api/admin")
@@ -27,6 +29,14 @@ public class BookApi {
     @Autowired
     private BookService bookService;
 
+    @GetMapping("/book/{bookCode}")
+    public ResponseEntity<CMRespDto<Map<String, Object>>> getBook(@PathVariable String bookCode) {
+
+        return ResponseEntity
+                .ok()
+                .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", bookService.getBookAndImage(bookCode)));
+    }
+
     @ParamsAspect
     @ValidAspect
     @GetMapping("/books")
@@ -34,6 +44,13 @@ public class BookApi {
         return ResponseEntity
                 .ok()
                 .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", bookService.searchBook(searchReqDto)));
+    }
+
+    @GetMapping("/books/totalcount")
+    public ResponseEntity<CMRespDto<?>> getBookTotalCount(SearchNumberListReqDto searchNumberListReqDto) {
+        return ResponseEntity
+                .ok()
+                .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", bookService.getBookTotalCount(searchNumberListReqDto)));
     }
 
     @GetMapping("/categories")
@@ -84,8 +101,25 @@ public class BookApi {
     }
 
     @ParamsAspect
+    @DeleteMapping("/books")
+    public ResponseEntity<CMRespDto<?>> removeBooks(@RequestBody DeleteBooksReqDto deleteBooksReqDto) {
+        bookService.removeBooks(deleteBooksReqDto);
+        return ResponseEntity
+                .ok()
+                .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", true));
+    }
+
+    @ParamsAspect
     @PostMapping("/book/{bookCode}/images")
     public ResponseEntity<CMRespDto<?>> registerBookImg(@PathVariable String bookCode, @RequestPart List<MultipartFile> files) {
+        bookService.registerBookImages(bookCode, files);
+        return ResponseEntity.ok()
+                .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", true));
+    }
+
+    @ParamsAspect
+    @PostMapping("/book/{bookCode}/images/modification")
+    public ResponseEntity<CMRespDto<?>> modifyBookImg(@PathVariable String bookCode, @RequestPart List<MultipartFile> files) {
         bookService.registerBookImages(bookCode, files);
         return ResponseEntity.ok()
                 .body(new CMRespDto<>(HttpStatus.OK.value(), "Successfully", true));
