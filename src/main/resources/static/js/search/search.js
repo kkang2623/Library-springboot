@@ -2,9 +2,14 @@ window.onload = () => {
     SearchService.getInstance().clearBookList();
     SearchService.getInstance().loadSearchBooks();
     SearchService.getInstance().loadCategories();
+    SearchService.getInstance().setMaxPage();
 
     ComponentEvent.getInstance().addClickEventCategoryCheckboxs();
+    ComponentEvent.getInstance().addScrollEventPaging();
+    ComponentEvent.getInstance().addClickEventSearchButton();
 }
+
+let maxPage = 0;
 
 const searchObj = {
     page: 1,
@@ -16,7 +21,7 @@ const searchObj = {
 class SearchApi {
     static #instance = null;
     static getInstance() {
-        if(this.#instance == null) {
+        if (this.#instance == null) {
             this.#instance = new SearchApi();
         }
         return this.#instance;
@@ -86,10 +91,17 @@ class SearchApi {
 class SearchService {
     static #instance = null;
     static getInstance() {
-        if(this.#instance == null) {
+        if (this.#instance == null) {
             this.#instance = new SearchService();
         }
         return this.#instance;
+    }
+
+    setMaxPage() {
+        const totalCount = SearchApi.getInstance().getTotalCount();
+        maxPage = totalCount % 10 == 0
+            ? totalCount / 10
+            : Math.floor(totalCount / 10) + 1;
     }
 
     loadCategories() {
@@ -148,7 +160,7 @@ class SearchService {
 class ComponentEvent {
     static #instance = null;
     static getInstance() {
-        if(this.#instance == null) {
+        if (this.#instance == null) {
             this.#instance = new ComponentEvent();
         }
         return this.#instance;
@@ -159,14 +171,49 @@ class ComponentEvent {
 
         checkboxs.forEach(checkbox => {
             checkbox.onclick = () => {
-                if(checkbox.checked) {
+                if (checkbox.checked) {
                     searchObj.categories.push(checkbox.value);
-                }else {
+                } else {
                     const index = searchObj.categories.indexOf(checkbox.value);
                     searchObj.categories.splice(index, 1);
                 }
-                console.log(searchObj.categories);
+                document.querySelector(".search-button").click();
             }
         });
     }
+
+    addScrollEventPaging() {
+        const html = document.querySelector("html");
+        const body = document.querySelector("body");
+
+        body.onscroll = () => {
+            const scrollPosition = body.offsetHeight - html.clientHeight - html.scrollTop;
+
+            if (scrollPosition < 250 && searchObj.page < maxPage) {
+                searchObj.page++;
+                SearchService.getInstance().loadSearchBooks();
+            }
+        }
+    }
+
+    addClickEventSearchButton() {
+        const searchButton = document.querySelector(".search-button");
+        const searchInput = document.querySelector(".search-input");
+
+        searchButton.onclick = () => {
+            searchObj.searchValue = searchInput.value;
+            searchObj.page = 1;
+            window.scrollTo(0, 0);
+            SearchService.getInstance().clearBookList();
+            SearchService.getInstance().setMaxPage();
+            SearchService.getInstance().loadSearchBooks();
+        }
+
+        searchInput.onkeyup = () => {
+            if(window.event.keyCode == 13){
+                searchButton.click();   
+            }
+        }
+    }
+
 }
