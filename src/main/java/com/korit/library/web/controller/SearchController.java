@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SearchController {
 
     @GetMapping("")
-    public String loadSearch(){
+    public String loadSearch() {
         return "search";
     }
+
 }

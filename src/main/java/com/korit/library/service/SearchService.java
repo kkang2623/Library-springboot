@@ -14,12 +14,21 @@ public class SearchService {
 
     private final SearchRepository searchRepository;
 
-    public int getSearchTotalCount(SearchBookReqDto searchBookReqDto){
+    public int getSearchTotalCount(SearchBookReqDto searchBookReqDto) {
         return searchRepository.getUserSearchBookTotalCount(searchBookReqDto);
     }
 
-    public List<SearchBook> getSearchBooks(SearchBookReqDto searchBookReqDto){
+    public List<SearchBook> getSearchBooks(SearchBookReqDto searchBookReqDto) {
         searchBookReqDto.setIndex();
         return searchRepository.userSearchBook(searchBookReqDto);
     }
+
+
 }
+
+
+
+
+
+
+

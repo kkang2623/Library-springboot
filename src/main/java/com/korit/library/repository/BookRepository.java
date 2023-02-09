@@ -27,6 +27,7 @@ public interface BookRepository {
     D:  도서삭제
      */
 
+
     public int getBookTotalCount(SearchNumberListReqDto searchNumberListReqDto);
     public List<BookMst> searchBook(SearchReqDto searchReqDto);
 

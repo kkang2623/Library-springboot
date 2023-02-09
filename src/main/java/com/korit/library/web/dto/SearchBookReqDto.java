@@ -16,7 +16,8 @@ public class SearchBookReqDto {
     @ApiModelProperty(hidden = true)
     private int index;
 
-    public void setIndex(){
+    public void setIndex() {
         index = (page - 1) * count;
     }
+
 }

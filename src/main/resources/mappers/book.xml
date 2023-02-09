@@ -26,7 +26,6 @@
         </if>
     </select>
 
-
     <select id="searchBook" parameterType="com.korit.library.web.dto.SearchReqDto" resultType="com.korit.library.entity.BookMst">
         SELECT
             bm.book_id as bookId,
@@ -77,9 +76,6 @@
             limit #{index}, #{count}
         </if>
     </select>
-
-
-
 
     <select id="findBookByBookCode" resultType="com.korit.library.entity.BookMst">
         SELECT
